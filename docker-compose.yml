@@ -1,48 +1,53 @@
+version: '3'
+
 services:
-  # Reverse Proxy (Traefik)
+  # Traefik Reverse Proxy
   traefik:
     image: traefik:v2.10
     container_name: traefik
     ports:
-      - "80:80"
-      - "443:443"
+      - "80:80"     # Expose le port HTTP
+      - "443:443"   # Expose le port HTTPS
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./traefik.yml:/etc/traefik/traefik.yml
-      - ./acme.json:/acme.json
+      - /var/run/docker.sock:/var/run/docker.sock   # Permet à Traefik d'interagir avec Docker
+      - ./traefik.yml:/etc/traefik/traefik.yml       # Votre fichier de configuration Traefik
+      - ./acme.json:/acme.json                       # Fichier pour les certificats Let's Encrypt
     networks:
       - web
     restart: always
 
+  # Service pour qarth.net
   qarth_net:
     image: nginx:latest
     container_name: qarth_net
     volumes:
-      - ../qarth_net:/usr/share/nginx/html
+      - ../qarth_net:/usr/share/nginx/html  # Le répertoire contenant les fichiers de votre site
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.qarth.rule=Host(`qarth.net`)"
-      - "traefik.http.routers.qarth.entrypoints=http"
-      - "traefik.http.routers.qarth.tls=true"
-      - "traefik.http.routers.qarth.tls.certresolver=letsencrypt"
+      - "traefik.enable=true"                                # Active Traefik pour ce conteneur
+      - "traefik.http.routers.qarth.rule=Host(`qarth.net`)"   # Définit la règle pour le domaine qarth.net
+      - "traefik.http.routers.qarth.entrypoints=http"         # Point d'entrée pour HTTP
+      - "traefik.http.routers.qarth.tls=true"                 # Active TLS
+      - "traefik.http.routers.qarth.tls.certresolver=letsencrypt"  # Utilisation de Let's Encrypt pour le certificat
     networks:
       - web
     restart: always
+
+  # Service pour facturepro.net
   facturepro_net:
     image: nginx:latest
     container_name: facturepro_net
     volumes:
-      - ../facturepro_net:/usr/share/nginx/html
+      - ../facturepro_net:/usr/share/nginx/html  # Le répertoire contenant les fichiers de votre site
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.facturepro.rule=Host(`facturepro.net`)"
-      - "traefik.http.routers.facturepro.entrypoints=http"
-      - "traefik.http.routers.facturepro.tls=true"
-      - "traefik.http.routers.facturepro.tls.certresolver=letsencrypt"
+      - "traefik.enable=true"                                  # Active Traefik pour ce conteneur
+      - "traefik.http.routers.facturepro.rule=Host(`facturepro.net`)"  # Règle pour le domaine facturepro.net
+      - "traefik.http.routers.facturepro.entrypoints=http"           # Point d'entrée pour HTTP
+      - "traefik.http.routers.facturepro.tls=true"                   # Active TLS
+      - "traefik.http.routers.facturepro.tls.certresolver=letsencrypt"  # Utilisation de Let's Encrypt pour le certificat
     networks:
       - web
     restart: always
 
 networks:
   web:
-    driver: bridge
+    driver: bridge   # Utilisation du driver bridge pour le réseau interne entre les conteneurs
