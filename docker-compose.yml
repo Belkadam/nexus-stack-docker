@@ -21,10 +21,10 @@ services:
       - ../qarth_net:/usr/share/nginx/html
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.site1.rule=Host(`site1.votredomaine.com`)"
-      - "traefik.http.routers.site1.entrypoints=http"
-      - "traefik.http.routers.site1.tls=true"
-      - "traefik.http.routers.site1.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.qarth.rule=Host(`qarth.net`)"
+      - "traefik.http.routers.qarth.entrypoints=http"
+      - "traefik.http.routers.qarth.tls=true"
+      - "traefik.http.routers.qarth.tls.certresolver=letsencrypt"
     networks:
       - web
     restart: always
@@ -35,10 +35,10 @@ services:
       - ../facturepro_net:/usr/share/nginx/html
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.site1.rule=Host(`site2.votredomaine.com`)"
-      - "traefik.http.routers.site1.entrypoints=http"
-      - "traefik.http.routers.site1.tls=true"
-      - "traefik.http.routers.site1.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.facturepro.rule=Host(`facturepro.net`)"
+      - "traefik.http.routers.facturepro.entrypoints=http"
+      - "traefik.http.routers.facturepro.tls=true"
+      - "traefik.http.routers.facturepro.tls.certresolver=letsencrypt"
     networks:
       - web
     restart: always
