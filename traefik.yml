@@ -1,22 +1,32 @@
+# Global Traefik configuration
+api:
+  dashboard: true
+
+log:
+  level: DEBUG
+
+# Entrypoints configuration (HTTP and HTTPS)
 entryPoints:
   http:
     address: ":80"
   https:
     address: ":443"
 
+# Let's Encrypt configuration for automatic SSL/TLS certificate management
 certificatesResolvers:
   letsencrypt:
     acme:
-      email: belkadam@gmail.com
+      email: your-email@example.com
       storage: /etc/traefik/acme.json
       httpChallenge:
         entryPoint: http
 
+# Docker provider configuration to detect containers dynamically
 providers:
   docker:
-    endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
 
-log:
-  level: INFO
-accessLog: {}
+# Enable Traefik's dashboard (optional)
+# You can access the dashboard at http://<your-server-ip>:8080
+#dashboard:
+#  entryPoint: http
