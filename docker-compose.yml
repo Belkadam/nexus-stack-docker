@@ -1,5 +1,3 @@
-#version: '3.8'
-
 services:
   # Reverse Proxy (Traefik)
   traefik:
@@ -16,7 +14,6 @@ services:
       - web
     restart: always
 
-  # Site 1
   qarth_net:
     image: nginx:latest
     container_name: qarth_net
@@ -31,7 +28,21 @@ services:
     networks:
       - web
     restart: always
+  facturepro_net:
+    image: nginx:latest
+    container_name: facturepro_net
+    volumes:
+      - ../facturepro_net:/usr/share/nginx/html
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.site1.rule=Host(`site2.votredomaine.com`)"
+      - "traefik.http.routers.site1.entrypoints=http"
+      - "traefik.http.routers.site1.tls=true"
+      - "traefik.http.routers.site1.tls.certresolver=letsencrypt"
+    networks:
+      - web
+    restart: always
 
 networks:
   web:
-    driver: bridge  # Utilise le driver par défaut
+    driver: bridge
