@@ -51,6 +51,8 @@ services:
     container_name: nexus_reload_com
     volumes:
       - ../nexus-reload_com:/usr/share/nginx/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf  # Remplace la configuration par défaut
+
     labels:
     - "traefik.enable=true"
     - "traefik.http.routers.nexus_reload.rule=Host(`nexus-reload.com`)"
