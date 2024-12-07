@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   # Reverse Proxy (Traefik)
   traefik:
@@ -16,34 +14,49 @@ services:
       - web
     restart: always
 
-  # Service 1: qarth_net
-  qarth_net:
-    image: nginx:latest
-    container_name: qarth_net
-    volumes:
-      - ../qarth_net:/usr/share/nginx/html
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.qarth.rule=Host(`qarth.net`)"
-      - "traefik.http.routers.qarth.entrypoints=http"
-      - "traefik.http.routers.qarth.tls=true"
-      - "traefik.http.routers.qarth.tls.certresolver=letsencrypt"
-    networks:
-      - web
-    restart: always
+  # Commented projects
+  # facturepro_net:
+  #   image: nginx:latest
+  #   container_name: facturepro_net
+  #   volumes:
+  #     - ../facturepro_net:/usr/share/nginx/html
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.facturepro.rule=Host(`facturepro.net`)"
+  #     - "traefik.http.routers.facturepro.entrypoints=http"
+  #     - "traefik.http.routers.facturepro.tls=true"
+  #     - "traefik.http.routers.facturepro.tls.certresolver=letsencrypt"
+  #   networks:
+  #     - web
+  #   restart: always
 
-  # Service 2: facturepro_net
-  facturepro_net:
+  # qarth_net:
+  #   image: nginx:latest
+  #   container_name: qarth_net
+  #   volumes:
+  #     - ../qarth_net:/usr/share/nginx/html
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.qarth.rule=Host(`qarth.net`)"
+  #     - "traefik.http.routers.qarth.entrypoints=http"
+  #     - "traefik.http.routers.qarth.tls=true"
+  #     - "traefik.http.routers.qarth.tls.certresolver=letsencrypt"
+  #   networks:
+  #     - web
+  #   restart: always
+
+  # New Project: nexus-reload_com
+  nexus_reload_com:
     image: nginx:latest
-    container_name: facturepro_net
+    container_name: nexus_reload_com
     volumes:
-      - ../facturepro_net:/usr/share/nginx/html
+      - ../nexus-reload_com:/usr/share/nginx/html
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.facturepro.rule=Host(`facturepro.net`)"
-      - "traefik.http.routers.facturepro.entrypoints=http"
-      - "traefik.http.routers.facturepro.tls=true"
-      - "traefik.http.routers.facturepro.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.nexus_reload.rule=Host(`nexus-reload.com`)"
+      - "traefik.http.routers.nexus_reload.entrypoints=http"
+      - "traefik.http.routers.nexus_reload.tls=true"
+      - "traefik.http.routers.nexus_reload.tls.certresolver=letsencrypt"
     networks:
       - web
     restart: always
