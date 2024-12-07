@@ -18,6 +18,7 @@ certificatesResolvers:
     acme:
       email: belkadam@gmail.com
       storage: /etc/traefik/acme.json
+
       httpChallenge:
         entryPoint: http
 
@@ -28,5 +29,5 @@ providers:
 
 # Enable Traefik's dashboard (optional)
 # You can access the dashboard at http://<your-server-ip>:8080
-#dashboard:
-#  entryPoint: http
+dashboard:
+  entryPoint: http
