@@ -57,6 +57,9 @@ services:
       - "traefik.http.routers.nexus_reload.entrypoints=http"
       - "traefik.http.routers.nexus_reload.tls=true"
       - "traefik.http.routers.nexus_reload.tls.certresolver=letsencrypt"
+      - "traefik.http.middlewares.nexus_reload_redirect.redirectregex.permanent=true"
+      - "traefik.http.middlewares.nexus_reload_redirect.redirectregex.regex=^https://www\.(.*)"
+      - "traefik.http.middlewares.nexus_reload_redirect.redirectregex.replacement=https://$1"
     networks:
       - web
     restart: always
