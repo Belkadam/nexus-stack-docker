@@ -3,6 +3,10 @@ services:
   traefik:
     image: traefik:v2.10
     container_name: traefik
+    command:
+      - "--api.dashboard=true"                   # Active le dashboard Traefik
+      - "--providers.docker=true"                # Active la détection Docker
+      - "--entrypoints.http.address=:80"
     ports:
       - "80:80"
       - "443:443"
