@@ -58,12 +58,11 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf  # Remplace la configuration par défaut
 
     labels:
-    - "traefik.enable=true"
-    - "traefik.http.routers.nexus_reload.rule=Host(`nexus-reload.com`)"
-    - "traefik.http.routers.nexus_reload.entrypoints=http"
-    - "traefik.http.routers.nexus_reload.tls=true"
-    - "traefik.http.routers.nexus_reload.tls.certresolver=letsencrypt"
-    - "traefik.http.services.nexus_reload.loadbalancer.server.port=80"
+      - "traefik.enable=true"
+      - "traefik.http.routers.nexus_reload.rule=Host(`nexus-reload.com`)" # Route pour le domaine
+      - "traefik.http.routers.nexus_reload_local.rule=PathPrefix(`/`)"  # Route pour localhost
+      - "traefik.http.routers.nexus_reload_local.entrypoints=http"
+      - "traefik.http.services.nexus_reload.loadbalancer.server.port=80"
     networks:
       - web
     restart: always
