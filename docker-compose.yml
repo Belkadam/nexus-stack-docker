@@ -59,9 +59,12 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.nexus_reload.rule=Host(`nexus-reload.com`)" # Route pour le domaine
-      - "traefik.http.routers.nexus_reload_local.rule=PathPrefix(`/`)"  # Route pour localhost
-      - "traefik.http.routers.nexus_reload_local.entrypoints=http"
+      - "traefik.http.routers.nexus_reload.rule=Host(`nexus-reload.com`)"
+      - "traefik.http.routers.nexus_reload.entrypoints=http"
+      - "traefik.http.routers.nexus_reload_https.rule=Host(`nexus-reload.com`)"
+      - "traefik.http.routers.nexus_reload_https.entrypoints=https"
+      - "traefik.http.routers.nexus_reload_https.tls=true"
+      - "traefik.http.routers.nexus_reload_https.tls.certresolver=letsencrypt"
       - "traefik.http.services.nexus_reload.loadbalancer.server.port=80"
     networks:
       - web
