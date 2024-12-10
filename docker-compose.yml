@@ -67,6 +67,7 @@ services:
 
       # Middleware for redirection
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true" # Make it a permanent (301) redirect
 
       # HTTPS route
       - "traefik.http.routers.nexus_reload_https.rule=Host(`nexus-reload.com`) || Host(`www.nexus-reload.com`)"
