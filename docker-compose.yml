@@ -60,19 +60,23 @@ services:
     labels:
       - "traefik.enable=true"
 
-      # Route HTTP (redirect to HTTPS)
+      # HTTP route (redirects to HTTPS for nexus-reload.com and www.nexus-reload.com)
       - "traefik.http.routers.nexus_reload_http.rule=Host(`nexus-reload.com`) || Host(`www.nexus-reload.com`)"
       - "traefik.http.routers.nexus_reload_http.entrypoints=http"
       - "traefik.http.routers.nexus_reload_http.middlewares=redirect-to-https"
 
-      # HTTPS Middleware redirections
+      # Middleware for HTTPS redirection
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
 
-      # Route HTTPS
+      # HTTPS route
       - "traefik.http.routers.nexus_reload_https.rule=Host(`nexus-reload.com`) || Host(`www.nexus-reload.com`)"
       - "traefik.http.routers.nexus_reload_https.entrypoints=https"
       - "traefik.http.routers.nexus_reload_https.tls=true"
       - "traefik.http.routers.nexus_reload_https.tls.certresolver=letsencrypt"
+
+      # Localhost-specific route to avoid HTTPS redirection
+      - "traefik.http.routers.nexus_reload_local.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.nexus_reload_local.entrypoints=http"
       - "traefik.http.services.nexus_reload.loadbalancer.server.port=80"
     networks:
       - web
