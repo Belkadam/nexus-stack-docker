@@ -60,8 +60,8 @@ services:
     labels:
       - "traefik.enable=true"
 
-      # HTTP route (redirects to HTTPS for nexus-reload.com and www.nexus-reload.com)
-      - "traefik.http.routers.nexus_reload_http.rule=Host(`nexus-reload.com`) || Host(`www.nexus-reload.com`)"
+      # HTTP route (redirects to HTTPS for nexus-reload.com only)
+      - "traefik.http.routers.nexus_reload_http.rule=Host(`nexus-reload.com`)"
       - "traefik.http.routers.nexus_reload_http.entrypoints=http"
       - "traefik.http.routers.nexus_reload_http.middlewares=redirect-to-https"
 
