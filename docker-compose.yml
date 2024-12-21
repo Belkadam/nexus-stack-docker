@@ -50,6 +50,25 @@ services:
       - "traefik.http.routers.facturepro.rule=Host(`localhost`)"
       - "traefik.http.routers.facturepro.entrypoints=local"
       - "traefik.http.routers.facturepro.tls=false"
+      # HTTP to HTTPS pour
+      - "traefik.http.routers.facturepro_http.rule=Host(`facturepro.net`) || Host(`www.facturepro.net`)"
+      - "traefik.http.routers.facturepro_http.entrypoints=http"
+      - "traefik.http.routers.facturepro_http.middlewares=redirect-to-https"
+
+      # Middleware
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true" # Redirection permanente (301)
+
+      # HTTPS route
+      - "traefik.http.routers.facturepro_https.rule=Host(`facturepro.net`) || Host(`www.facturepro.net`)"
+      - "traefik.http.routers.facturepro_https.entrypoints=https"
+      - "traefik.http.routers.facturepro_https.tls=true"
+      - "traefik.http.routers.facturepro_https.tls.certresolver=letsencrypt"
+
+      # localhost routes (bypass redirection)
+      - "traefik.http.routers.facturepro_local.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.facturepro_local.entrypoints=http"
+      - "traefik.http.services.facturepro.loadbalancer.server.port=80"
     networks:
       - web
     restart: always
