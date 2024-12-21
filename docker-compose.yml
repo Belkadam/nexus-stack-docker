@@ -7,12 +7,15 @@ services:
       - "--api.dashboard=true"
       - "--providers.docker=true"
       - "--entrypoints.http.address=:80"
-      - "--entrypoints.local.address=:8081"   # Entry point local pour qarth.net sur localhost:8081
+      - "--entrypoints.local.address=:8081"
+      - "--entrypoints.local.address=:8082"
+
 
     ports:
       - "80:80"
       - "443:443"
-      - "8081:8081"                          # Expose port 8081 pour l'accès local à qarth.net
+      - "8081:8081"
+      - "8082:8082"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik.yml:/etc/traefik/traefik.yml
@@ -36,7 +39,20 @@ services:
 #      - web
 #    restart: always
 
-
+  # facturepro_net
+  facturepro_net:
+    image: nginx:latest
+    container_name: facturepro_net
+    volumes:
+      - ../facturepro_net:/usr/share/nginx/html
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.facturepro.rule=Host(`localhost`)"
+      - "traefik.http.routers.facturepro.entrypoints=local"
+      - "traefik.http.routers.facturepro.tls=false"
+    networks:
+      - web
+    restart: always
 
   # nexus_reload_com
   nexus_reload_com:

@@ -11,6 +11,8 @@ entryPoints:
     address: ":80"
   https:
     address: ":443"
+  local:
+    address: ":8082"
 
 # Let's Encrypt configuration for automatic SSL/TLS certificate management
 certificatesResolvers:
