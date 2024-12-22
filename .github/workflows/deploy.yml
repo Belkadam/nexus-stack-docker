@@ -30,7 +30,7 @@ jobs:
           USER_GIT: ${{ secrets.USER_GIT }}
         run: |
           ssh $USER_GIT@$SERVER_IP <<EOF
-            cd /path/to/your/project
+            cd /srv/docker/nexus/nexus-stack-docker/
             git pull origin main
             docker-compose stop
             docker-compose up -d
