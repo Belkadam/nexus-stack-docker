@@ -16,18 +16,21 @@ jobs:
       - name: Set up SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          USER_GIT: ${{ secrets.USER_GIT }}
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
 
       - name: Deploy using SSH
         env:
           SERVER_IP: ${{ secrets.SERVER_IP }}
+          USER_GIT: ${{ secrets.USER_GIT }}
         run: |
-          ssh ${secrets.USER_GIT}@${SERVER_IP} <<EOF
-            cd /srv/docker/nexus/nexus-stack-docker/
+          ssh $USER_GIT@$SERVER_IP <<EOF
+            cd /path/to/your/project
             git pull origin main
             docker-compose stop
             docker-compose up -d
