@@ -23,6 +23,40 @@ services:
       - web
     restart: always
 
+  # qarth_net
+  qarth_net:
+    image: nginx:latest
+    container_name: qarth_net
+    volumes:
+      - ../qarth_net:/usr/share/nginx/html
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.qarth.rule=Host(`localhost`)"
+      - "traefik.http.routers.qarth.entrypoints=qarth_local"
+      - "traefik.http.routers.qarth.tls=false"
+      # HTTP to HTTPS pour
+      - "traefik.http.routers.qarth_http.rule=Host(`qarth.net`) || Host(`www.qarth.net`)"
+      - "traefik.http.routers.qarth_http.entrypoints=http"
+      - "traefik.http.routers.qarth_http.middlewares=redirect-to-https"
+
+      # Middleware
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true" # Redirection permanente (301)
+
+      # HTTPS route
+      - "traefik.http.routers.qarth_https.rule=Host(`qarth.net`) || Host(`www.qarth.net`)"
+      - "traefik.http.routers.qarth_https.entrypoints=https"
+      - "traefik.http.routers.qarth_https.tls=true"
+      - "traefik.http.routers.qarth_https.tls.certresolver=letsencrypt"
+
+      # localhost routes (bypass redirection)
+      - "traefik.http.routers.qarth_local.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.qarth_local.entrypoints=http"
+      - "traefik.http.services.qarth_local.loadbalancer.server.port=80"
+    networks:
+      - web
+    restart: always
+
   # facturepro_net
   facturepro_net:
     image: nginx:latest

@@ -11,6 +11,8 @@ entryPoints:
     address: ":80"
   https:
     address: ":443"
+  qarth_local:
+    address: ":8081"
   facturepro_local:
     address: ":8082"
 
