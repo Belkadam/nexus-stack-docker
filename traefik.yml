@@ -11,7 +11,7 @@ entryPoints:
     address: ":80"
   https:
     address: ":443"
-  local:
+  facturepro_local:
     address: ":8082"
 
 # Let's Encrypt configuration for automatic SSL/TLS certificate management

@@ -7,8 +7,8 @@ services:
       - "--api.dashboard=true"
       - "--providers.docker=true"
       - "--entrypoints.http.address=:80"
-      - "--entrypoints.local.address=:8081"
-      - "--entrypoints.local.address=:8082"
+      - "--entrypoints.qarth_local.address=:8081"
+      - "--entrypoints.facturepro_local.address=:8082"
 
     ports:
       - "80:80"
@@ -23,21 +23,6 @@ services:
       - web
     restart: always
 
-  # qarth_net
-#  qarth_net:
-#    image: nginx:latest
-#    container_name: qarth_net
-#    volumes:
-#      - ../qarth_net:/usr/share/nginx/html
-#    labels:
-#      - "traefik.enable=true"
-#      - "traefik.http.routers.qarth.rule=Host(`localhost`)"
-#      - "traefik.http.routers.qarth.entrypoints=local"
-#      - "traefik.http.routers.qarth.tls=false"
-#    networks:
-#      - web
-#    restart: always
-
   # facturepro_net
   facturepro_net:
     image: nginx:latest
@@ -47,7 +32,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.facturepro.rule=Host(`localhost`)"
-      - "traefik.http.routers.facturepro.entrypoints=local"
+      - "traefik.http.routers.facturepro.entrypoints=facturepro_local"
       - "traefik.http.routers.facturepro.tls=false"
       # HTTP to HTTPS pour
       - "traefik.http.routers.facturepro_http.rule=Host(`facturepro.net`) || Host(`www.facturepro.net`)"
