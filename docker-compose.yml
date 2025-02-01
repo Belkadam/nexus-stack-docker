@@ -9,7 +9,6 @@ services:
       - "--entrypoints.http.address=:80"
       - "--entrypoints.qarth_local.address=:8081"
       - "--entrypoints.facturepro_local.address=:8082"
-
     ports:
       - "80:80"
       - "443:443"
@@ -49,7 +48,7 @@ services:
       - "traefik.http.routers.qarth_https.tls=true"
       - "traefik.http.routers.qarth_https.tls.certresolver=letsencrypt"
 
-      # localhost routes (bypass redirection)
+      # localhost routes
       - "traefik.http.routers.qarth_local.rule=PathPrefix(`/`)"
       - "traefik.http.routers.qarth_local.entrypoints=http"
       - "traefik.http.services.qarth_local.loadbalancer.server.port=80"
@@ -83,7 +82,7 @@ services:
       - "traefik.http.routers.facturepro_https.tls=true"
       - "traefik.http.routers.facturepro_https.tls.certresolver=letsencrypt"
 
-      # localhost routes (bypass redirection)
+      # localhost routes
       - "traefik.http.routers.facturepro_local.rule=PathPrefix(`/`)"
       - "traefik.http.routers.facturepro_local.entrypoints=http"
       - "traefik.http.services.facturepro_local.loadbalancer.server.port=80"
@@ -117,7 +116,7 @@ services:
       - "traefik.http.routers.nexus_reload_https.tls=true"
       - "traefik.http.routers.nexus_reload_https.tls.certresolver=letsencrypt"
 
-      # Route localhost spécifique (bypass redirection)
+      # Route localhost
       - "traefik.http.routers.nexus_reload_local.rule=PathPrefix(`/`)"
       - "traefik.http.routers.nexus_reload_local.entrypoints=http"
       - "traefik.http.services.nexus_reload.loadbalancer.server.port=80"
@@ -125,7 +124,7 @@ services:
       - web
     restart: always
 
-  # n8n Service
+  # n8n
   n8n:
     image: n8nio/n8n:latest
     container_name: n8n
@@ -135,7 +134,6 @@ services:
       - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
       - N8N_PORT=5678
-
     labels:
       - "traefik.enable=true"
 
@@ -143,7 +141,6 @@ services:
       - "traefik.http.routers.n8n_http.rule=Host(`n8n.nexus-reload.com`)"
       - "traefik.http.routers.n8n_http.entrypoints=http"
       - "traefik.http.routers.n8n_http.middlewares=redirect-to-https"
-
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
 
@@ -157,7 +154,6 @@ services:
       - "traefik.http.services.n8n.loadbalancer.server.port=5678"
     networks:
       - web
-
 
 networks:
   web:
