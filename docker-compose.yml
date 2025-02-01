@@ -155,6 +155,10 @@ services:
 
       # Service configuration
       - "traefik.http.services.n8n.loadbalancer.server.port=5678"
+      - "traefik.http.services.n8n.loadbalancer.server.port=5678"
+    networks:
+      - web
+
 
 networks:
   web:
