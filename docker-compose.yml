@@ -125,6 +125,34 @@ services:
       - web
     restart: always
 
+  # n8n Service
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER="root"
+      - N8N_BASIC_AUTH_PASSWORD="root"
+    labels:
+      - "traefik.enable=true"
+
+      # HTTP -> HTTPS redirection
+      - "traefik.http.routers.n8n_http.rule=Host(`n8n.nexus-reload.com`)"
+      - "traefik.http.routers.n8n_http.entrypoints=http"
+      - "traefik.http.routers.n8n_http.middlewares=redirect-to-https"
+
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
+
+      # HTTPS route
+      - "traefik.http.routers.n8n_https.rule=Host(`n8n.nexus-reload.com`)"
+      - "traefik.http.routers.n8n_https.entrypoints=https"
+      - "traefik.http.routers.n8n_https.tls=true"
+      - "traefik.http.routers.n8n_https.tls.certresolver=letsencrypt"
+
+      # Service configuration
+      - "traefik.http.services.n8n.loadbalancer.server.port=5678"
+
 networks:
   web:
     driver: bridge
