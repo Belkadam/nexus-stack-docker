@@ -20,7 +20,7 @@ entryPoints:
 certificatesResolvers:
   letsencrypt:
     acme:
-      email: ${SSL_EMAIL}"
+      email: ${SSL_EMAIL}
       storage: /etc/traefik/acme.json
 
       httpChallenge:
