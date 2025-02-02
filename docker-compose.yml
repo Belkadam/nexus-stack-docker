@@ -3,6 +3,8 @@ services:
   traefik:
     image: traefik:v2.10
     container_name: traefik
+    environment:
+      - SSL_EMAIL=${SSL_EMAIL}
     command:
       - "--api.dashboard=true"
       - "--providers.docker=true"
