@@ -51,7 +51,7 @@ services:
       # localhost routes
       - "traefik.http.routers.qarth_local.rule=PathPrefix(`/`)"
       - "traefik.http.routers.qarth_local.entrypoints=http"
-      - "traefik.http.services.qarth_local.loadbalancer.server.port=80"
+      - "traefik.http.services.qarth.loadbalancer.server.port=80"
     networks:
       - web
     restart: always
@@ -85,7 +85,7 @@ services:
       # localhost routes
       - "traefik.http.routers.facturepro_local.rule=PathPrefix(`/`)"
       - "traefik.http.routers.facturepro_local.entrypoints=http"
-      - "traefik.http.services.facturepro_local.loadbalancer.server.port=80"
+      - "traefik.http.services.facturepro.loadbalancer.server.port=80"
     networks:
       - web
     restart: always
