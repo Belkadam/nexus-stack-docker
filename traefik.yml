@@ -20,7 +20,7 @@ entryPoints:
 certificatesResolvers:
   letsencrypt:
     acme:
-      email: ${SSL_EMAIL}
+      email: belkadam@gmail.com
       storage: /etc/traefik/acme.json
 
       httpChallenge:
