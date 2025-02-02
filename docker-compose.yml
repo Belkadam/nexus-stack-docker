@@ -132,6 +132,8 @@ services:
       - N8N_BASIC_AUTH_ACTIVE=true
       - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}
       - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
+      - WEBHOOK_URL=https://n8n.nexus-reload.com/
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
       - N8N_URL=https://n8n.nexus-reload.com
       - N8N_TRUST_PROXY=true
@@ -139,8 +141,7 @@ services:
       - N8N_PORT=5678
       - N8N_PROTOCOL=https
       - NODE_ENV=production
-      - WEBHOOK_URL=https://n8n.nexus-reload.com/
-      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+
     labels:
       - "traefik.enable=true"
 
