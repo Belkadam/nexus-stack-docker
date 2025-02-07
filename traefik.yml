@@ -15,6 +15,8 @@ entryPoints:
     address: ":8081"
   facturepro_local:
     address: ":8082"
+  sf_api_local:
+    address: ":8083"
 
 # Let's Encrypt configuration for automatic SSL/TLS certificate management
 certificatesResolvers:
