@@ -212,7 +212,6 @@ services:
       - "traefik.http.routers.sf_api_https.tls.certresolver=letsencrypt"
 
       # Exposer le service via Nginx
-      - "traefik.enable=true"
       - "traefik.http.routers.sf_api_nginx.rule=Host(`localhost`)"
       - "traefik.http.routers.sf_api_nginx.entrypoints=sf_api_local"
       - "traefik.http.services.sf_api_nginx.loadbalancer.server.port=80"
