@@ -170,7 +170,8 @@ services:
       - web
 
   sf_api:
-    image: php:8.4-fpm
+    build:
+      context: docker/sf_api
     container_name: sf_api
     working_dir: /var/www/sf-api
     volumes:
@@ -178,6 +179,8 @@ services:
     networks:
       - web
     restart: always
+    env_file:
+      - .env
     labels:
       - "traefik.enable=false"
 
@@ -201,12 +204,11 @@ services:
   sf_api_db:
     image: mariadb:latest
     container_name: sf_api_db
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: sf_api
-      MYSQL_USER: sf_user
-      MYSQL_PASSWORD: sf_password
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env
     volumes:
       - sf_api_db_data:/var/lib/mysql
     networks:
