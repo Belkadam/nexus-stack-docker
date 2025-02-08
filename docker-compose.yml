@@ -197,6 +197,23 @@ services:
     restart: always
     labels:
       - "traefik.enable=true"
+
+      # Redirection HTTP -> HTTPS
+      - "traefik.http.routers.sf_api_http.rule=Host(`api.nexus-reload.com`)"
+      - "traefik.http.routers.sf_api_http.entrypoints=http"
+      - "traefik.http.routers.sf_api_http.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
+
+      # Route HTTPS
+      - "traefik.http.routers.sf_api_https.rule=Host(`api.nexus-reload.com`)"
+      - "traefik.http.routers.sf_api_https.entrypoints=https"
+      - "traefik.http.routers.sf_api_https.tls=true"
+      - "traefik.http.routers.sf_api_https.tls.certresolver=letsencrypt"
+
+      # Exposer le service via Nginx
+
+      - "traefik.enable=true"
       - "traefik.http.routers.sf_api_nginx.rule=Host(`localhost`)"
       - "traefik.http.routers.sf_api_nginx.entrypoints=sf_api_local"
       - "traefik.http.services.sf_api_nginx.loadbalancer.server.port=80"
