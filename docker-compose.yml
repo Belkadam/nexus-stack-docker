@@ -12,6 +12,7 @@ services:
       - "--entrypoints.qarth_local.address=:8081"
       - "--entrypoints.facturepro_local.address=:8082"
       - "--entrypoints.sf_api_local.address=:8083"
+      - "--certificatesresolvers.letsencrypt.acme.email=${SSL_EMAIL}"
     ports:
       - "80:80"
       - "443:443"
