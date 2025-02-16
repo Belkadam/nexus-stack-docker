@@ -168,6 +168,7 @@ services:
     networks:
       - web
 
+  # SF api
   sf_api:
     build:
       context: docker/sf_api
@@ -183,6 +184,7 @@ services:
     labels:
       - "traefik.enable=false"
 
+  # SF api nginx
   sf_api_nginx:
     image: nginx:latest
     container_name: sf_api_nginx
@@ -215,6 +217,7 @@ services:
       - "traefik.http.routers.sf_api_nginx.entrypoints=sf_api_local"
       - "traefik.http.services.sf_api_nginx.loadbalancer.server.port=80"
 
+  # SF api db
   sf_api_db:
     image: mariadb:latest
     container_name: sf_api_db
