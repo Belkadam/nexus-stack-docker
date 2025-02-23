@@ -10,6 +10,7 @@ services:
       - "--entrypoints.qarth_local.address=:8081"
       - "--entrypoints.facturepro_local.address=:8082"
       - "--entrypoints.sf_api_local.address=:8083"
+      - "--entrypoints.pwa_dashboard_local.address=:5173"
       - "--certificatesresolvers.letsencrypt.acme.email=${SSL_EMAIL}"
     ports:
       - "80:80"
@@ -17,6 +18,7 @@ services:
       - "8081:8081"
       - "8082:8082"
       - "8083:8083"
+      - "8084:5173"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik.yml:/etc/traefik/traefik.yml
@@ -230,6 +232,26 @@ services:
       - sf_api_db_data:/var/lib/mysql
     networks:
       - web
+
+  # PWA Dashboard
+  pwa_dashboard:
+    build:
+      context: ../pwa-dashboard
+      dockerfile: ../nexus-stack-docker/docker/pwa-dashboard/Dockerfile
+    container_name: pwa_dashboard
+    volumes:
+      - ../pwa-dashboard:/app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pwa_dashboard.rule=Host(`localhost`)"
+      - "traefik.http.routers.pwa_dashboard.entrypoints=pwa_dashboard_local"
+      - "traefik.http.routers.pwa_dashboard.tls=false"
+      - "traefik.http.routers.pwa_dashboard_local.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.pwa_dashboard_local.entrypoints=http"
+      - "traefik.http.services.pwa_dashboard.loadbalancer.server.port=5173"
+    networks:
+      - web
+    restart: always
 networks:
   web:
     driver: bridge

@@ -17,6 +17,8 @@ entryPoints:
     address: ":8082"
   sf_api_local:
     address: ":8083"
+  pwa_dashboard_local:
+    address: ":5173"
 
 # Let's Encrypt configuration for automatic SSL/TLS certificate management
 certificatesResolvers:
