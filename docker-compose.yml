@@ -45,7 +45,7 @@ services:
 
       # Middleware
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true" # Redirection permanente (301)
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
 
       # HTTPS route
       - "traefik.http.routers.qarth_https.rule=Host(`qarth.net`) || Host(`www.qarth.net`)"
@@ -243,9 +243,26 @@ services:
       - ../pwa-dashboard:/app
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.pwa_dashboard.tls=false"
+
+      # HTTP to HTTPS pour
+      - "traefik.http.routers.pwa_dashboard_http.rule=Host(`qarth.net`) || Host(`www.qarth.net`)"
+      - "traefik.http.routers.pwa_dashboard_http.entrypoints=http"
+      - "traefik.http.routers.pwa_dashboard_http.middlewares=redirect-to-https"
+
+      # Middleware
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
+
+      # HTTPS route
+      - "traefik.http.routers.pwa_dashboard_https.rule=Host(`dashboard.nexus-reload.com`) || Host(`www.dashboard.nexus-reload.com`)"
+      - "traefik.http.routers.pwa_dashboard_https.entrypoints=https"
+      - "traefik.http.routers.pwa_dashboard_https.tls=true"
+      - "traefik.http.routers.pwa_dashboard_https.tls.certresolver=letsencrypt"
+
+      # localhost routes
       - "traefik.http.routers.pwa_dashboard.rule=Host(`localhost`)"
       - "traefik.http.routers.pwa_dashboard.entrypoints=pwa_dashboard_local"
-      - "traefik.http.routers.pwa_dashboard.tls=false"
       - "traefik.http.routers.pwa_dashboard_local.rule=PathPrefix(`/`)"
       - "traefik.http.routers.pwa_dashboard_local.entrypoints=http"
       - "traefik.http.services.pwa_dashboard.loadbalancer.server.port=5173"
