@@ -16,16 +16,27 @@ RUN \
 
 # Note: Don't expose ports here, Compose will handle that for us
 
-# Start vue.js in development mode based on the preferred package manager
+# Start vue.js based on the environment (development or production)
 CMD if [ "$ENV" = "production" ]; then \
-    if [ -f yarn.lock ]; then yarn build; \
-    elif [ -f package-lock.json ]; then npm run build; \
-    elif [ -f pnpm-lock.yaml ]; then pnpm run build; \
-    else yarn build; \
+    if [ -f yarn.lock ]; then \
+      yarn build; \
+    elif [ -f package-lock.json ]; then \
+      npm run build; \
+    elif [ -f pnpm-lock.yaml ]; then \
+      pnpm run build; \
+    else \
+      yarn build; \
+    fi; \
   else \
-    if [ -f yarn.lock ]; then yarn dev --host; \
-    elif [ -f package-lock.json ]; then npm run dev -- --host; \
-    elif [ -f pnpm-lock.yaml ]; then pnpm dev --host; \
-    else yarn dev --host; \
-  fi; \
-fi
+    if [ -f yarn.lock ]; then \
+      yarn dev --host; \
+    elif [ -f package-lock.json ]; then \
+      npm run dev -- --host; \
+    elif [ -f pnpm-lock.yaml ]; then \
+      pnpm dev --host; \
+    else \
+      yarn dev --host; \
+    fi; \
+  fi
+
+

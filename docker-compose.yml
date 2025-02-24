@@ -239,6 +239,8 @@ services:
       context: ../pwa-dashboard
       dockerfile: ../nexus-stack-docker/docker/pwa-dashboard/Dockerfile
     container_name: pwa_dashboard
+    environment:
+      - ENV=${ENV}
     volumes:
       - ../pwa-dashboard:/app
     labels:
