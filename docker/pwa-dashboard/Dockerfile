@@ -15,6 +15,7 @@ RUN \
   fi
 
 # Note: Don't expose ports here, Compose will handle that for us
+RUN yarn --version || echo "yarn not installed"
 
 # Start vue.js based on the environment (development or production)
 CMD if [ "$ENV" = "production" ]; then \
