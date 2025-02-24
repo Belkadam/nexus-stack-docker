@@ -5,6 +5,8 @@ WORKDIR /app
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 COPY . .
+RUN yarn --version || echo "yarn not installed"
+
 
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
@@ -15,7 +17,7 @@ RUN \
   fi
 
 # Note: Don't expose ports here, Compose will handle that for us
-RUN yarn --version || echo "yarn not installed"
+
 
 # Start vue.js based on the environment (development or production)
 CMD if [ "$ENV" = "production" ]; then \
