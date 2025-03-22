@@ -4,10 +4,6 @@ FROM node:18 as builder
 # Set the working directory in the container
 WORKDIR /app
 
-# Install pnpm globally
-RUN npm install -g pnpm@6
-
-
 # Copy package.json and yarn.lock to the container
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 
