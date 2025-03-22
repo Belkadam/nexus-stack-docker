@@ -267,7 +267,7 @@ services:
       - "traefik.http.routers.pwa_dashboard.entrypoints=pwa_dashboard_local"
       - "traefik.http.routers.pwa_dashboard_local.rule=PathPrefix(`/`)"
       - "traefik.http.routers.pwa_dashboard_local.entrypoints=http"
-      - "traefik.http.services.pwa_dashboard.loadbalancer.server.port={PWA_DASHBOARD_PORT}"
+      - "traefik.http.services.pwa_dashboard.loadbalancer.server.port=${PWA_DASHBOARD_PORT}"
     networks:
       - web
     restart: always
