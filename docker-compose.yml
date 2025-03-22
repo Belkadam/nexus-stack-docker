@@ -245,7 +245,6 @@ services:
       - ../pwa-dashboard:/app
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.pwa_dashboard.tls=false"
 
       # HTTP to HTTPS pour
       - "traefik.http.routers.pwa_dashboard_http.rule=Host(`dashboard.nexus-reload.com`) || Host(`dashboard.nexus-reload.com`)"
