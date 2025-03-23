@@ -214,7 +214,7 @@ services:
       - "traefik.http.routers.sf_api_https.tls=true"
       - "traefik.http.routers.sf_api_https.tls.certresolver=letsencrypt"
 
-      # Exposer le service via Nginx
+      # Expose via Nginx
       - "traefik.http.routers.sf_api_nginx.rule=Host(`localhost`)"
       - "traefik.http.routers.sf_api_nginx.entrypoints=sf_api_local"
       - "traefik.http.services.sf_api_nginx.loadbalancer.server.port=80"
@@ -247,16 +247,14 @@ services:
       - "traefik.enable=true"
 
       # HTTP to HTTPS pour
-      - "traefik.http.routers.pwa_dashboard_http.rule=Host(`dashboard.nexus-reload.com`) || Host(`dashboard.nexus-reload.com`)"
+      - "traefik.http.routers.pwa_dashboard_http.rule=Host(`dashboard.nexus-reload.com`)"
       - "traefik.http.routers.pwa_dashboard_http.entrypoints=http"
       - "traefik.http.routers.pwa_dashboard_http.middlewares=redirect-to-https"
-
-      # Middleware
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
 
       # HTTPS route
-      - "traefik.http.routers.pwa_dashboard_https.rule=Host(`dashboard.nexus-reload.com`) || Host(`www.dashboard.nexus-reload.com`)"
+      - "traefik.http.routers.pwa_dashboard_https.rule=Host(`dashboard.nexus-reload.com`)"
       - "traefik.http.routers.pwa_dashboard_https.entrypoints=https"
       - "traefik.http.routers.pwa_dashboard_https.tls=true"
       - "traefik.http.routers.pwa_dashboard_https.tls.certresolver=letsencrypt"
