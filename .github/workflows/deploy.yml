@@ -32,7 +32,7 @@ jobs:
           ssh $USER_GIT@$SERVER_IP <<EOF
             cd /srv/docker/nexus/nexus-stack-docker/
             git pull origin main
-            docker-compose stop
-            docker-compose up -d
+            docker-compose stop pwa_dashboard
+            docker-compose up pwa_dashboard -d
           EOF
           
