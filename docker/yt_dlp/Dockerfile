@@ -6,12 +6,21 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
-# Installer yt-dlp
-RUN pip install yt-dlp
+# Copy requirements
+COPY requirements.txt /app/requirements.txt
 
-# Créer dossier pour stocker les vidéos
+# Install python dependencies
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# Copy server FastAPI
+WORKDIR /app
+COPY server.py .
+
+# Create media folder
 RUN mkdir -p /media
 
-WORKDIR /media
+# Expose internal port of the service
+EXPOSE 8000
 
-CMD ["tail", "-f", "/dev/null"]
+# Launch FastAPI with Uvicorn
+CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
