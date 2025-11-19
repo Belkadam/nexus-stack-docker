@@ -268,6 +268,20 @@ services:
     networks:
       - web
     restart: always
+
+  # yt-dlp service
+  yt_dlp_service:
+    build:
+      context: docker/yt_dlp
+    image: python:3.12-slim
+    container_name: yt_dlp_service
+    working_dir: /media
+    volumes:
+      - ./media:/media
+    command: tail -f /dev/null
+    restart: always
+    networks:
+      - web
 networks:
   web:
     driver: bridge
