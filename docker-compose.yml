@@ -178,6 +178,10 @@ services:
     working_dir: /var/www/sf-api
     volumes:
       - ../sf-api:/var/www/sf-api
+      - ./conf/sf_api/99-custom.ini:/usr/local/etc/php/conf.d/99-custom.ini
+      - /tmp/xdebug_profile:/tmp/xdebug_profile
+    environment:
+      - PHP_IDE_CONFIG=serverName=sf-api
     networks:
       - web
     restart: always
