@@ -180,6 +180,7 @@ services:
       - ../sf-api:/var/www/sf-api
       - ./conf/sf_api/99-custom.ini:/usr/local/etc/php/conf.d/99-custom.ini
       - /tmp/xdebug_profile:/tmp/xdebug_profile
+      - ./media:/var/www/sf-api/public/media
     environment:
       - PHP_IDE_CONFIG=serverName=sf-api
     networks:
@@ -197,6 +198,7 @@ services:
     volumes:
       - ../sf-api:/var/www/sf-api
       - ./nginx/sf_api.conf:/etc/nginx/conf.d/default.conf
+      - ./media:/var/www/sf-api/public/media
     networks:
       - web
     depends_on:
