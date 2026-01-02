@@ -285,7 +285,9 @@ services:
       - ./media:/media
     restart: always
     networks:
-      - web
+      web:
+        aliases:
+          - yt-dlp
 networks:
   web:
     driver: bridge
