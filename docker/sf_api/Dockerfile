@@ -3,7 +3,7 @@ FROM php:8.4-fpm-bookworm
 # Installer Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Installer les dépendances système (sans linux-headers)
+# Installer les dépendances système
 RUN apt-get update && apt-get install -y \
     git \
     zip \
@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y \
     g++ \
     make \
     autoconf \
+    linux-headers \
     icu-devtools \
     supervisor \
  && rm -rf /var/lib/apt/lists/*
@@ -31,5 +32,8 @@ RUN docker-php-ext-install mysqli gd mbstring curl xml zip opcache intl sockets
 RUN pecl install xdebug apcu \
  && docker-php-ext-enable apcu xdebug
 
+# Exposer le port FPM
 EXPOSE 9000
+
+# Définir le dossier de travail
 WORKDIR /var/www
