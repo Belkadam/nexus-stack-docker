@@ -17,6 +17,7 @@ def download(videoId: str):
         "yt-dlp",
         "--cookies", "/app/cookies.txt",
         "-f", "ba/b",
+        "--js-runtimes", "node",
         "-o", output_template,
         f"https://www.youtube.com/watch?v={videoId}"
     ]
