@@ -175,6 +175,7 @@ services:
     build:
       context: docker/sf_api
     container_name: sf_api
+    dns_search: .
     working_dir: /var/www/sf-api
     volumes:
       - ../sf-api:/var/www/sf-api
