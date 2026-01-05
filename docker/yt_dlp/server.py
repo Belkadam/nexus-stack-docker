@@ -15,7 +15,8 @@ def download(videoId: str):
 
     cmd = [
         "yt-dlp",
-        "-f", "bestaudio",
+        "--cookies", "/app/cookies.txt",
+        "-f", "ba/b",
         "-o", output_template,
         f"https://www.youtube.com/watch?v={videoId}"
     ]

@@ -284,6 +284,7 @@ services:
     working_dir: /app
     volumes:
       - ./media:/media
+      - ./other/youtube_cookies.txt:/app/cookies.txt
     restart: always
     networks:
       - web
