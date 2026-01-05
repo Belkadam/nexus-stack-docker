@@ -4,6 +4,7 @@ RUN apt-get update && apt-get install -y \
     ffmpeg \
     curl \
     unzip \
+    nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements
