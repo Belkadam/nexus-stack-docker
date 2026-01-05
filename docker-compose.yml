@@ -190,8 +190,6 @@ services:
       - .env
     labels:
       - "traefik.enable=false"
-    extra_hosts:
-      - "yt-dlp:8000"
 
   # SF api nginx
   sf_api_nginx:
